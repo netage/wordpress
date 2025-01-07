@@ -492,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			}
 
-			if (additionalMessage !== undefined) {
+			if (additionalMessage !== undefined && !additionalMessage.classList.contains('plausible-analytics-persist')) {
 				container.removeChild(additionalMessage);
 			}
 		}

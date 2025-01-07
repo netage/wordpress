@@ -730,9 +730,13 @@ class API {
 			$text_class = 'text-green-700 dark:text-green-800';
 		}
 
+		if (!empty($field['slug'])) {
+			$persist_message = 'plausible-analytics-persist';
+		}
+
 		ob_start();
 		?>
-		<div class="plausible-analytics-hook transition-opacity transition-300">
+		<div class="plausible-analytics-hook <?php echo $persist_message; ?> transition-opacity transition-300">
 			<div class="rounded-md p-4 mt-4 relative <?php echo esc_attr( $box_class ); ?> rounded-t-md rounded-b-none">
 				<div class="flex">
 					<div class="flex-shrink-0">
