@@ -739,9 +739,10 @@ class API {
 	 *
 	 */
 	public function render_hook_field( array $field ) {
-		$hook_type  = $field['hook_type'] ?? 'warning';
-		$box_class  = 'bg-yellow-50 dark:bg-yellow-100';
-		$text_class = 'text-yellow-700 dark:text-yellow-800';
+		$hook_type       = $field['hook_type'] ?? 'warning';
+		$box_class       = 'bg-yellow-50 dark:bg-yellow-100';
+		$text_class      = 'text-yellow-700 dark:text-yellow-800';
+		$persist_message = '';
 
 		if ( $hook_type === 'success' ) {
 			$box_class  = 'bg-green-50 dark:bg-green-100';
