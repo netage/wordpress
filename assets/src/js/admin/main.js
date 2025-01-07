@@ -469,6 +469,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			let targetElem = document.querySelector(`[name='${target}']`);
 			let container = targetElem.closest('.plausible-analytics-group');
 
+			if (container.children.length > 0) {
+				for (let i = 0; i < container.children.length; i++) {
+					if (container.children[i].id.includes(target)) {
+						// This message already exists.
+						return;
+					}
+				}
+			}
+
 			container.innerHTML += html;
 		},
 
