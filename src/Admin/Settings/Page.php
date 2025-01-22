@@ -139,42 +139,42 @@ class Page extends API {
 						'plausible-analytics'
 					),
 					'fields' => [
-						'404'            => [
+						'404'              => [
 							'label' => esc_html__( '404 error pages', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-404-error-pages',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => '404',
 						],
-						'outbound-links' => [
+						'outbound-links'   => [
 							'label' => esc_html__( 'Outbound links', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-external-link-clicks',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'outbound-links',
 						],
-						'file-downloads' => [
+						'file-downloads'   => [
 							'label' => esc_html__( 'File downloads', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-file-downloads',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'file-downloads',
 						],
-						'search'         => [
+						'search'           => [
 							'label' => esc_html__( 'Search queries', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-enable-site-search-tracking',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'search',
 						],
-						'tagged-events'  => [
+						'tagged-events'    => [
 							'label' => esc_html__( 'Custom events', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-setup-custom-events-to-track-goal-conversions',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'tagged-events',
 						],
-						'revenue'        => [
+						'revenue'          => [
 							'label'    => esc_html__( 'Ecommerce revenue', 'plausible-analytics' ),
 							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-ecommerce-revenue',
 							'slug'     => 'enhanced_measurements',
@@ -182,28 +182,28 @@ class Page extends API {
 							'value'    => 'revenue',
 							'disabled' => ! empty( $settings[ 'self_hosted_domain' ] ),
 						],
-						'pageview-props' => [
+						'pageview-props'   => [
 							'label' => esc_html__( 'Authors and categories', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-send-custom-properties',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'pageview-props',
 						],
-						'form-submit'    => [
-							'label' => esc_html__( 'Form submissions', 'plausible-analytics' ),
+						'form-completions' => [
+							'label' => esc_html__( 'Form completions', 'plausible-analytics' ),
 							'docs'  => '',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
-							'value' => 'form-submit',
+							'value' => 'form-completions',
 						],
-						'hash'           => [
+						'hash'             => [
 							'label' => esc_html__( 'Hash-based routing', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-enable-hash-based-url-tracking',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'hash',
 						],
-						'compat'         => [
+						'compat'           => [
 							'label' => esc_html__( 'IE compatibility', 'plausible-analytics' ),
 							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-visitors-who-use-internet-explorer',
 							'slug'  => 'enhanced_measurements',
