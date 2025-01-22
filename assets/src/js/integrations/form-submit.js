@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			let self = this;
 
 			this.forms.forEach((form) => {
-				form.addEventListener('submit', function (e) {
+				form.addEventListener('submit', (e) => {
 					if (self.isValid(e.target)) {
 						self.trackSubmission();
 					}
