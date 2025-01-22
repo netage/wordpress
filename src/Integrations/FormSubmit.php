@@ -8,6 +8,8 @@
 
 namespace Plausible\Analytics\WP\Integrations;
 
+use Plausible\Analytics\WP\Proxy;
+
 class FormSubmit {
 	/**
 	 * Build class.
@@ -25,6 +27,10 @@ class FormSubmit {
 		 * Adds required JS and classes.
 		 */
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_js' ], 1 );
+		/**
+		 * Contact Form 7 doesn't respect JS checkValidity() function.
+		 */
+		add_filter( 'wpcf7_validate', [ $this, 'wpcf7_validate' ], 10, 2 );
 	}
 
 	/**
@@ -32,6 +38,10 @@ class FormSubmit {
 	 * @return void
 	 */
 	public function add_js() {
+		if ( defined( 'WPCF7_VERSION' ) ) {
+			return;
+		}
+
 		wp_register_script(
 			'plausible-form-submit-integration',
 			PLAUSIBLE_ANALYTICS_PLUGIN_URL . 'assets/dist/js/plausible-form-submit-integration.js',
@@ -46,5 +56,32 @@ class FormSubmit {
 		);
 
 		wp_enqueue_script( 'plausible-form-submit-integration' );
+	}
+
+	/**
+	 * Tracks the form submission if form is valid.
+	 *
+	 * @param \WPCF7_Validation $result Form submission result object containing validation results.
+	 * @param array             $tags   Array of tags associated with the form fields.
+	 *
+	 * @return \WPCF7_Validation
+	 */
+	public function wpcf7_validate( $result, $tags ) {
+		$invalid_fields = $result->get_invalid_fields();
+
+		if ( empty( $invalid_fields ) ) {
+			$post = get_post( $_POST[ '_wpcf7_container_post' ] );
+			$uri  = '/' . $post->post_name . '/';
+
+			$proxy = new Proxy( false );
+			$proxy->do_request(
+				__( 'Form Completions', 'plausible-analytics' ),
+				null,
+				null,
+				[ 'form' => $uri ]
+			);
+		}
+
+		return $result;
 	}
 }
