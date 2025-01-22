@@ -13,6 +13,7 @@ use Plausible\Analytics\WP\Proxy;
 class FormSubmit {
 	/**
 	 * Build class.
+	 * @codeCoverageIgnore
 	 */
 	public function __construct() {
 		$this->init();
@@ -21,6 +22,7 @@ class FormSubmit {
 	/**
 	 * Init
 	 * @return void
+	 * @codeCoverageIgnore
 	 */
 	private function init() {
 		/**
@@ -36,6 +38,7 @@ class FormSubmit {
 	/**
 	 * Enqueues the required JavaScript for form submissions integration.
 	 * @return void
+	 * @codeCoverageIgnore because there's nothing to test here.
 	 */
 	public function add_js() {
 		if ( defined( 'WPCF7_VERSION' ) ) {
@@ -65,6 +68,7 @@ class FormSubmit {
 	 * @param array             $tags   Array of tags associated with the form fields.
 	 *
 	 * @return \WPCF7_Validation
+	 * @codeCoverageIgnore because we can't test XHR requests here.
 	 */
 	public function maybe_track_submission( $result, $tags ) {
 		$invalid_fields = $result->get_invalid_fields();
