@@ -32,11 +32,19 @@ class FormSubmit {
 	 * @return void
 	 */
 	public function add_js() {
-		wp_enqueue_script(
+		wp_register_script(
 			'plausible-form-submit-integration',
 			PLAUSIBLE_ANALYTICS_PLUGIN_URL . 'assets/dist/js/plausible-form-submit-integration.js',
-			[],
+			[ 'plausible-analytics' ],
 			filemtime( PLAUSIBLE_ANALYTICS_PLUGIN_DIR . 'assets/dist/js/plausible-form-submit-integration.js' )
 		);
+
+		wp_localize_script(
+			'plausible-form-submit-integration',
+			'plausible_analytics_i18n',
+			[ 'form_completions' => __( 'Form Completions', 'plausible-analytics' ), ]
+		);
+
+		wp_enqueue_script( 'plausible-form-submit-integration' );
 	}
 }
