@@ -191,7 +191,7 @@ class Page extends API {
 						],
 						'form-completions' => [
 							'label' => esc_html__( 'Form completions', 'plausible-analytics' ),
-							'docs'  => '',
+							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-form-completions',
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'form-completions',
