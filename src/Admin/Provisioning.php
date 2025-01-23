@@ -71,7 +71,7 @@ class Provisioning {
 			'outbound-links'   => __( 'Outbound Link: Click', 'plausible-analytics' ),
 			'file-downloads'   => __( 'File Download', 'plausible-analytics' ),
 			'search'           => __( 'WP Search Queries', 'plausible-analytics' ),
-			'form-completions' => __( 'Form Completions', 'plausible-analytics' ),
+			'form-completions' => __( 'WP Form Completions', 'plausible-analytics' ),
 		];
 
 		$this->init();
