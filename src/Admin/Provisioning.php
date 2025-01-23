@@ -392,8 +392,7 @@ class Provisioning {
 
 		if ( ! Helpers::is_enhanced_measurement_enabled( 'pageview-props', $enhanced_measurements ) &&
 			! Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) &&
-			! Helpers::is_enhanced_measurement_enabled( 'search', $enhanced_measurements ) &&
-			! Helpers::is_enhanced_measurement_enabled( 'form-completions', $enhanced_measurements ) ) {
+			! Helpers::is_enhanced_measurement_enabled( 'search', $enhanced_measurements ) ) {
 			return; // @codeCoverageIgnore
 		}
 
@@ -426,10 +425,6 @@ class Provisioning {
 			foreach ( $this->custom_search_properties as $property ) {
 				$properties[] = new Client\Model\CustomProp( [ 'custom_prop' => [ 'key' => $property ] ] );
 			}
-		}
-
-		if ( Helpers::is_enhanced_measurement_enabled( 'form-completions', $enhanced_measurements ) ) {
-			$properties[] = new Client\Model\CustomProp( [ 'custom_prop' => [ 'key' => 'form' ] ] );
 		}
 
 		if ( empty( $properties ) ) {

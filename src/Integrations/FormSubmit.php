@@ -55,7 +55,7 @@ class FormSubmit {
 		wp_localize_script(
 			'plausible-form-submit-integration',
 			'plausible_analytics_i18n',
-			[ 'form_completions' => __( 'Form Completions', 'plausible-analytics' ), ]
+			[ 'form_completions' => __( 'WP Form Completions', 'plausible-analytics' ), ]
 		);
 
 		wp_enqueue_script( 'plausible-form-submit-integration' );
@@ -79,10 +79,10 @@ class FormSubmit {
 
 			$proxy = new Proxy( false );
 			$proxy->do_request(
-				__( 'Form Completions', 'plausible-analytics' ),
+				__( 'WP Form Completions', 'plausible-analytics' ),
 				null,
 				null,
-				[ 'form' => $uri ]
+				[ 'path' => $uri ]
 			);
 		}
 
