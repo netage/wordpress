@@ -2,7 +2,6 @@
 
 /**
  * Plausible Analytics | Integrations
- *
  * @since      2.1.0
  * @package    WordPress
  * @subpackage Plausible Analytics
@@ -25,7 +24,6 @@ class Integrations {
 
 	/**
 	 * Run available integrations.
-	 *
 	 * @return void
 	 */
 	private function init() {
@@ -38,11 +36,14 @@ class Integrations {
 		if ( self::is_edd_active() ) {
 			// new Integrations\EDD();
 		}
+
+		if ( self::is_form_submit_active() ) {
+			new Integrations\FormSubmit();
+		}
 	}
 
 	/**
 	 * Checks if WooCommerce is installed and activated.
-	 *
 	 * @return bool
 	 */
 	public static function is_wc_active() {
@@ -51,10 +52,20 @@ class Integrations {
 
 	/**
 	 * Checks if Easy Digital Downloads is installed and activated.
-	 *
 	 * @return bool
 	 */
 	public static function is_edd_active() {
 		return apply_filters( 'plausible_analytics_integrations_edd', function_exists( 'EDD' ) );
+	}
+
+	/**
+	 * Check if Form Submissions option is enabled in Enhanced Measurements.
+	 * @return mixed|null
+	 */
+	public static function is_form_submit_active() {
+		return apply_filters(
+			'plausible_analytics_integrations_form_submit',
+			Helpers::is_enhanced_measurement_enabled( 'form-submit' )
+		);
 	}
 }
