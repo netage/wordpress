@@ -13,7 +13,7 @@ Plausible Analytics is an easy-to-use, open source, lightweight and privacy-frie
 
 == Description ==
 
-Plausible Analytics is an easy-to-use, open source, lightweight (<1 KB) and privacy-friendly web analytics alternative to Google Analytics.
+Plausible Analytics is an easy-to-use, open source, lightweight and privacy-friendly web analytics alternative to Google Analytics.
 
 Plausible Analytics doesn’t use cookies and is fully compliant with GDPR, CCPA and PECR. Made and hosted in the EU, powered by European-owned cloud infrastructure 🇪🇺.
 
@@ -29,7 +29,7 @@ We're completely independent, self-funded, bootstrapped and debt-free. We're not
 
 Google Analytics is frustrating to use, difficult to understand, slow to load and privacy-invasive. That's why we built Plausible Analytics, a simple but powerful, lightweight, open source and privacy-friendly alternative. 
 
-Here's what makes Plausible a great Google Analytics alternative and why over 12,000 paying subscribers trust us with their website and business insights:
+Here's what makes Plausible a great Google Analytics alternative and why over 14,000 paying subscribers trust us with their website and business insights:
 
 ### Smooth transition from Google Analytics
 
@@ -41,7 +41,7 @@ Plausible is simple analytics. It is easy to understand and it cuts through the 
 
 ### Lightweight script that keeps your site speed fast
 
-Plausible is lightweight analytics. Our script is 45 times smaller than Google Analytics. Your page weight will be cut down, your site will load faster and you'll reduce your carbon footprint for a greener and more sustainable web. A site with 10,000 monthly visitors can save 4.5 kg of CO2 emissions per year by switching.
+Plausible is lightweight analytics. Our script is 75 times smaller than Google Analytics. Your page weight will be cut down, your site will load faster and you'll reduce your carbon footprint for a greener and more sustainable web. A site with 100,000 monthly visitors can save 8.2 kg of CO2 emissions per year by switching.
 
 ### No need for cookie banners or GDPR consent
 
@@ -49,7 +49,7 @@ Plausible is privacy-friendly analytics. All the site measurement is carried out
 
 ### Track events and marketing campaigns
 
-Plausible is useful. Segment your audience by any metric you click on. Answer the important questions about your visitors, content and referral sources. Analyze paid campaigns using UTM parameters. Track site search terms, outbound link clicks, file downloads, 404 error pages, post authors, post categories and custom taxonomies without manually configuring anything or writing any code.
+Plausible is useful. Segment your audience by any metric you click on. Answer the important questions about your visitors, content and referral sources. Analyze paid campaigns using UTM parameters. Track site search terms, outbound link clicks, file downloads, form completions, 404 error pages, post authors, post categories and custom taxonomies without manually configuring anything or writing any code.
 
 ### Built-in WooCommerce analytics
 
