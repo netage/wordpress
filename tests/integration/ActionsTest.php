@@ -66,10 +66,14 @@ class ActionsTest extends TestCase {
 			require_once( ABSPATH . 'wp-includes/class-wp-admin-bar.php' );
 		}
 
+		wp_set_current_user( 1 );
 		$admin_bar = new WP_Admin_Bar();
-
 		$class->admin_bar_node( $admin_bar );
-
 		$this->assertNotEmpty( $admin_bar->get_node( 'plausible-analytics' ) );
+
+		wp_set_current_user( 0 );
+		$admin_bar = new WP_Admin_Bar();
+		$class->admin_bar_node( $admin_bar );
+		$this->assertEmpty( $admin_bar->get_node( 'plausible-analytics' ) );
 	}
 }

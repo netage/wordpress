@@ -131,13 +131,32 @@ class Actions {
 			return; // @codeCoverageIgnore
 		}
 
+		$settings = Helpers::get_settings();
+		$current_user = wp_get_current_user();
+
+		$has_access             = false;
+		$user_roles_have_access = array_merge(
+			[ 'administrator' ],
+			$settings['expand_dashboard_access'] ?? []
+		);
+
+		foreach ( $current_user->roles as $role ) {
+			if ( in_array( $role, $user_roles_have_access, true ) ) {
+				$has_access = true;
+				break;
+			}
+		}
+
+		if ( ! $has_access ) {
+			return;
+		}
+
 		// Add main admin bar node.
 		$args[] = [
 			'id'    => 'plausible-analytics',
 			'title' => 'Plausible Analytics',
 		];
 
-		$settings = Helpers::get_settings();
 
 		if ( ! empty( $settings[ 'enable_analytics_dashboard' ] ) ||
 			( ! empty( $settings[ 'self_hosted_domain' ] ) && ! empty( $settings[ 'self_hosted_shared_link' ] ) ) ) {
@@ -167,12 +186,14 @@ class Actions {
 		}
 
 		// Add link to Plausible Settings page.
-		$args[] = [
-			'id'     => 'settings',
-			'title'  => esc_html__( 'Settings', 'plausible-analytics' ),
-			'href'   => admin_url( 'options-general.php?page=plausible_analytics' ),
-			'parent' => 'plausible-analytics',
-		];
+		if ( current_user_can( 'manage_options' ) ) {
+			$args[] = [
+				'id'     => 'settings',
+				'title'  => esc_html__( 'Settings', 'plausible-analytics' ),
+				'href'   => admin_url( 'options-general.php?page=plausible_analytics' ),
+				'parent' => 'plausible-analytics',
+			];
+		}
 
 		foreach ( $args as $arg ) {
 			$admin_bar->add_node( $arg );
