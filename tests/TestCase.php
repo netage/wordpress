@@ -24,6 +24,32 @@ class TestCase extends YoastTestCase {
 	}
 
 	/**
+	 * Enable Enhanced Measurements > Custom Events (Tagged Events)
+	 *
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	public function enableRevenue( $settings ) {
+		$settings[ 'enhanced_measurements' ] = [ 'revenue' ];
+
+		return $settings;
+	}
+
+	/**
+	 * Enable form completions by modifying the settings array.
+	 *
+	 * @param array $settings The settings array to be modified.
+	 *
+	 * @return array The modified settings array including form completions.
+	 */
+	public function enableFormCompletions( $settings ) {
+		$settings[ 'enhanced_measurements' ] = [ 'form-completions' ];
+
+		return $settings;
+	}
+
+	/**
 	 * Enable the proxy.
 	 *
 	 * @param $settings

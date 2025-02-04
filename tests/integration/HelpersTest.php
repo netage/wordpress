@@ -128,19 +128,6 @@ class HelpersTest extends TestCase {
 	}
 
 	/**
-	 * Enable Enhanced Measurements > Custom Events (Tagged Events)
-	 *
-	 * @param $settings
-	 *
-	 * @return mixed
-	 */
-	public function enableRevenue( $settings ) {
-		$settings[ 'enhanced_measurements' ] = [ 'revenue' ];
-
-		return $settings;
-	}
-
-	/**
 	 * Enable Enhanced Measurements > Search Queries
 	 *
 	 * @param $settings
