@@ -98,7 +98,7 @@ class HelpersTest extends TestCase {
 
 		$this->assertEquals( 'plausible.pageview-props.manual', $filename );
 
-		remove_filter( 'plausible_analytics_settings', [ $this, 'enablePageviewProps' ] );
+		remove_filter( 'plausible_analytics_settings', [ $this, 'enableSearch' ] );
 	}
 
 	/**
