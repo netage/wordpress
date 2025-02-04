@@ -47,7 +47,7 @@ class Integrations {
 	 * @return bool
 	 */
 	public static function is_wc_active() {
-		return apply_filters( 'plausible_analytics_integrations_woocommerce', function_exists( 'WC' ) );
+		return apply_filters( 'plausible_analytics_integrations_woocommerce', function_exists( 'WC' ) && Helpers::is_enhanced_measurement_enabled( 'revenue' ) );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Integrations {
 	 * @return bool
 	 */
 	public static function is_edd_active() {
-		return apply_filters( 'plausible_analytics_integrations_edd', function_exists( 'EDD' ) );
+		return apply_filters( 'plausible_analytics_integrations_edd', function_exists( 'EDD' ) && Helpers::is_enhanced_measurement_enabled( 'revenue' ) );
 	}
 
 	/**
