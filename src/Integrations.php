@@ -65,7 +65,7 @@ class Integrations {
 	public static function is_form_submit_active() {
 		return apply_filters(
 			'plausible_analytics_integrations_form_submit',
-			Helpers::is_enhanced_measurement_enabled( 'form-submit' )
+			Helpers::is_enhanced_measurement_enabled( 'form-completions' )
 		);
 	}
 }
