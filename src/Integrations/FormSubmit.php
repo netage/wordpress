@@ -41,10 +41,6 @@ class FormSubmit {
 	 * @codeCoverageIgnore because there's nothing to test here.
 	 */
 	public function add_js() {
-		if ( defined( 'WPCF7_VERSION' ) ) {
-			return;
-		}
-
 		wp_register_script(
 			'plausible-form-submit-integration',
 			PLAUSIBLE_ANALYTICS_PLUGIN_URL . 'assets/dist/js/plausible-form-submit-integration.js',
