@@ -5,7 +5,7 @@ Tags: analytics, google analytics, web analytics, stats, privacy
 Requires at least: 5.3
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.1.4
+Stable tag: 2.2.0
 License: Massachusetts Institute of Technology (MIT) license
 License URI: https://opensource.org/licenses/MIT
 
@@ -154,6 +154,13 @@ Contact us: https://plausible.io/contact
 Please make sure you make a backup of your database before updating any version to ensure that none of your data is lost.
 
 == Changelog ==
+
+= 2.2.0 | February 5th, 2025 =
+Fixed: N/A in CE edition message wasn't shown properly when certain options were toggled.
+Fixed: Create Plugin Token message was removed when View Stats was disabled.
+Fixed: when toggling options, some messages in the Settings screen were duplicated.
+Added: new enhanced measurement - Form Completions, tested with all major forms plugins.
+Fixed: WP Rocket compatibility no longer worked, because a filter name was changed in a recent release of WP Rocket.
 
 = 2.1.4 | September 25th, 2024 =
 * Improved: when no token was entered, the API client would keep trying to verify the connection. This is now fixed.
