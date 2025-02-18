@@ -45,7 +45,10 @@ class Helpers {
 	 */
 	public static function get_filename( $local = false ) {
 		$settings  = self::get_settings();
-		$file_name = 'plausible';
+		if(defined('PLAUSIBLE_PREFIX'))
+        	$file_name = PLAUSIBLE_PREFIX;
+		else
+			$file_name = 'plausible';
 
 		if ( $local && self::proxy_enabled() ) {
 			return self::get_proxy_resource( 'file_alias' );
