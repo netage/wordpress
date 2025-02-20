@@ -284,11 +284,6 @@ class Ajax {
 		}
 
 		foreach ( $options as $option ) {
-			// Strip http(s)://(www.) from the domain_name option before saving it.
-			if ( $option->name === 'domain_name' && preg_match( '/^((https?:\/\/)?(www.)?)/', $option->value ) ) {
-				$option->value = preg_replace( '/^((https?:\/\/)?(www.)?)/', '', $option->value );
-			}
-
 			// Clean spaces
 			$settings[ $option->name ] = trim( $option->value );
 

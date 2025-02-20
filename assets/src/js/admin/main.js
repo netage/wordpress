@@ -142,6 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			const options = [];
 
 			inputs.forEach(function (input) {
+				// Strip http(s)://(www.) from domain_name before sending it.
+				if (input.name === 'domain_name' && input.value.match(/^(https?:\/\/)?(www.)?/).length > 0) {
+					input.value = input.value.replace(/^(https?:\/\/)?(www.)?/, '');
+				}
+
 				options.push({name: input.name, value: input.value});
 			});
 
