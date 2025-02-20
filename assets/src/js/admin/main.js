@@ -142,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			const options = [];
 
 			inputs.forEach(function (input) {
+				input = plausible.validateInput(input);
+
 				options.push({name: input.name, value: input.value});
 			});
 
@@ -156,6 +158,21 @@ document.addEventListener('DOMContentLoaded', () => {
 			button.setAttribute('disabled', 'disabled');
 
 			plausible.ajax(form, button);
+		},
+
+		/**
+		 * Currently only validates the domain_name input, but can be used in the future for other custom input validations.
+		 *
+		 * @param input
+		 * @returns {*}
+		 */
+		validateInput: function (input) {
+			// Strip http(s)://(www.) from domain_name before sending it.
+			if (input.name === 'domain_name' && input.value.match(/^(https?:\/\/)?(www.)?/).length > 0) {
+				input.value = input.value.replace(/^(https?:\/\/)?(www.)?/, '');
+			}
+
+			return input;
 		},
 
 		/**
@@ -175,6 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			let options = [];
 
 			for (let input of inputs) {
+				input = plausible.validateInput(input);
+
 				options.push({name: input.name, value: input.value});
 			}
 
