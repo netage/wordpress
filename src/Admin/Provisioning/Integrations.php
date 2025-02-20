@@ -9,15 +9,20 @@
 namespace Plausible\Analytics\WP\Admin\Provisioning;
 
 use Plausible\Analytics\WP\Admin\Provisioning;
-use Plausible\Analytics\WP\Client\ApiException;
 
-class Integrations extends Provisioning {
+class Integrations {
+	/**
+	 * @var Provisioning
+	 */
+	private $provisioning;
+
 	/**
 	 * Build class.
-	 * @throws ApiException
+	 *
+	 * We use DI to prevent circular dependency.
 	 */
 	public function __construct() {
-		parent::__construct();
+		$this->provisioning = new Provisioning();
 
 		$this->init();
 	}
@@ -48,7 +53,7 @@ class Integrations extends Provisioning {
 		foreach ( $event_goals as $event_key => $event_goal ) {
 			// Don't add this goal to the funnel. Create it separately instead.
 			if ( $event_key === 'remove-from-cart' ) {
-				$this->create_goals( [ $this->create_goal_request( $event_goal ) ] );
+				$this->provisioning->create_goals( [ $this->provisioning->create_goal_request( $event_goal ) ] );
 
 				continue;
 			}
@@ -60,21 +65,21 @@ class Integrations extends Provisioning {
 					$currency = get_woocommerce_currency();
 				}
 
-				$goals[] = $this->create_goal_request( $event_goal, 'Revenue', $currency );
+				$goals[] = $this->provisioning->create_goal_request( $event_goal, 'Revenue', $currency );
 
 				continue;
 			}
 
 			if ( $event_key === 'view-product' ) {
-				$goals[] = $this->create_goal_request( $event_goal, 'Pageview', null, '/product*' );
+				$goals[] = $this->provisioning->create_goal_request( $event_goal, 'Pageview', null, '/product*' );
 
 				continue;
 			}
 
-			$goals[] = $this->create_goal_request( $event_goal );
+			$goals[] = $this->provisioning->create_goal_request( $event_goal );
 		}
 
-		$this->create_funnel( $funnel_name, $goals );
+		$this->provisioning->create_funnel( $funnel_name, $goals );
 	}
 
 	/**
@@ -89,10 +94,10 @@ class Integrations extends Provisioning {
 		$goals = get_option( 'plausible_analytics_enhanced_measurements_goal_ids', [] );
 
 		foreach ( $goals as $id => $name ) {
-			$key = $this->array_search_contains( $name, $integration->event_goals );
+			$key = $this->provisioning->array_search_contains( $name, $integration->event_goals );
 
 			if ( $key ) {
-				$this->client->delete_goal( $id );
+				$this->provisioning->client->delete_goal( $id );
 
 				unset( $goals[ $id ] );
 			}
