@@ -24,7 +24,7 @@ class EDD {
 	 */
 	public function __construct( $init = true ) {
 		$this->event_goals = [
-			'view-product'     => __( 'Visit /product*', 'plausible-analytics' ),
+			'view-product'     => sprintf( __( 'Visit /%s*', 'plausible-analytics' ), defined( 'EDD_SLUG' ) ? EDD_SLUG : 'downloads' ),
 			'add-to-cart'      => __( 'EDD Add to Cart', 'plausible-analytics' ),
 			'remove-from-cart' => __( 'EDD Remove from Cart', 'plausible-analytics' ),
 			'checkout'         => __( 'EDD Start Checkout', 'plausible-analytics' ),
@@ -176,7 +176,7 @@ class EDD {
 			'plausible_analytics_edd_purchase_custom_properties',
 			[
 				'revenue' => [
-					'amount'   => $payment->total,
+					'amount'   => number_format_i18n( $payment->total, 2 ),
 					'currency' => $payment->currency,
 				],
 			]
