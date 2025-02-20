@@ -211,8 +211,7 @@ class Provisioning {
 	 * @codeCoverageIgnore Because we don't want to test the API.
 	 */
 	public function maybe_create_woocommerce_funnel( $old_settings, $settings ) {
-		if ( ! Helpers::is_enhanced_measurement_enabled( 'revenue', $settings[ 'enhanced_measurements' ] ) ||
-			! Integrations::is_wc_active() ) {
+		if ( ! Helpers::is_enhanced_measurement_enabled( 'revenue', $settings[ 'enhanced_measurements' ] ) || ! Integrations::is_wc_active() ) {
 			return; // @codeCoverageIgnore
 		}
 
@@ -411,8 +410,7 @@ class Provisioning {
 		/**
 		 * Create Custom Properties for WooCommerce integration.
 		 */
-		if ( Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) &&
-			Integrations::is_wc_active() ) {
+		if ( Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) && Integrations::is_wc_active() ) {
 			foreach ( WooCommerce::CUSTOM_PROPERTIES as $property ) {
 				$properties[] = new Client\Model\CustomProp( [ 'custom_prop' => [ 'key' => $property ] ] );
 			}
