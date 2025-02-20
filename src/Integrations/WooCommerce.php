@@ -9,6 +9,7 @@
 
 namespace Plausible\Analytics\WP\Integrations;
 
+use Plausible\Analytics\WP\Admin\Provisioning;
 use Plausible\Analytics\WP\Integrations;
 use Plausible\Analytics\WP\Proxy;
 use WC_Cart;
@@ -16,24 +17,6 @@ use WC_Product;
 
 class WooCommerce {
 	const PURCHASE_TRACKED_META_KEY = '_plausible_analytics_purchase_tracked';
-
-	const CUSTOM_PROPERTIES         = [
-		'cart_total',
-		'cart_total_items',
-		'id',
-		'name',
-		'price',
-		'product_id',
-		'product_name',
-		'quantity',
-		'shipping',
-		'subtotal',
-		'subtotal_tax',
-		'tax_class',
-		'total',
-		'total_tax',
-		'variation_id',
-	];
 
 	/**
 	 * @var array Custom Event Goals used to track Events in WooCommerce.
@@ -244,7 +227,7 @@ class WooCommerce {
 	 */
 	private function clean_data( $product ) {
 		foreach ( $product as $key => $value ) {
-			if ( ! in_array( $key, self::CUSTOM_PROPERTIES ) ) {
+			if ( ! in_array( $key, Provisioning::CUSTOM_PROPERTIES ) ) {
 				unset( $product[ $key ] );
 			}
 		}

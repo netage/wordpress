@@ -19,6 +19,24 @@ use Plausible\Analytics\WP\Integrations;
 use Plausible\Analytics\WP\Integrations\WooCommerce;
 
 class Provisioning {
+	const CUSTOM_PROPERTIES = [
+		'cart_total',
+		'cart_total_items',
+		'id',
+		'name',
+		'price',
+		'product_id',
+		'product_name',
+		'quantity',
+		'shipping',
+		'subtotal',
+		'subtotal_tax',
+		'tax_class',
+		'total',
+		'total_tax',
+		'variation_id',
+	];
+
 	/**
 	 * @var Client $client
 	 */
@@ -408,8 +426,8 @@ class Provisioning {
 		/**
 		 * Create Custom Properties for WooCommerce integration.
 		 */
-		if ( Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) && Integrations::is_wc_active() ) {
-			foreach ( WooCommerce::CUSTOM_PROPERTIES as $property ) {
+		if ( Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) && ( Integrations::is_wc_active() || Integrations::is_edd_active() ) ) {
+			foreach ( self::CUSTOM_PROPERTIES as $property ) {
 				$properties[] = new Client\Model\CustomProp( [ 'custom_prop' => [ 'key' => $property ] ] );
 			}
 		}
