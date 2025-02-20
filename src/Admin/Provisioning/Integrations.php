@@ -25,6 +25,8 @@ class Integrations extends Provisioning {
 	/**
 	 * Action & filter hooks.
 	 *
+	 * We use Dependency Injection to prevent circular dependency.
+	 *
 	 * @return void
 	 * @codeCoverageIgnore This is merely a wrapper to load classes. No need to test.
 	 */
