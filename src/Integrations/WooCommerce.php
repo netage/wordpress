@@ -275,6 +275,12 @@ class WooCommerce {
 	}
 
 	/**
+	 * Tracks when a user enters the checkout process and sends event data to Plausible Analytics.
+	 *
+	 * This method checks if the current page is the checkout page. If it is, it collects relevant
+	 * cart information like subtotal, shipping, tax, and total, applies filters to allow custom properties,
+	 * encodes the data as JSON, and generates a JavaScript snippet to send the data to Plausible Analytics.
+	 *
 	 * @return void
 	 */
 	public function track_entered_checkout() {
