@@ -37,7 +37,7 @@ final class Plugin {
 			new Admin\Filters();
 			new Admin\Actions();
 			new Admin\Module();
-			new Admin\Provisioning();
+			new Admin\Provisioning\Integrations();
 		}
 
 		new Integrations();
