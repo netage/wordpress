@@ -184,7 +184,7 @@ class EDD {
 			'plausible_analytics_edd_purchase_custom_properties',
 			[
 				'revenue' => [
-					'amount'   => number_format_i18n( $payment->total, 2 ),
+					'amount'   => number_format( (float) $payment->total, 2 ),
 					'currency' => $payment->currency,
 				],
 			]
