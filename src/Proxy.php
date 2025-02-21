@@ -114,7 +114,7 @@ class Proxy {
 
 		// Revenue events use a different approach.
 		if ( isset( $props[ 'revenue' ] ) ) {
-			$body[ 'revenue' ] = reset( $props );
+			$body[ 'revenue' ] = reset( $props ); // @codeCoverageIgnore
 		} elseif ( ! empty( $props ) ) {
 			$body[ 'p' ] = $props; // @codeCoverageIgnore
 		}

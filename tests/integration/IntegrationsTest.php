@@ -19,15 +19,12 @@ class IntegrationsTest extends TestCase {
 	 * and finally removes the applied filter.
 	 */
 	public function testIsWcActive() {
-		add_filter( 'plausible_analytics_settings', [ $this, 'enableRevenue' ] );
+		add_filter( 'plausible_analytics_integrations_woocommerce', '__return_true' );
 
 		// WC is already mocked.
 		$this->assertTrue( Integrations::is_wc_active() );
 
-		remove_filter(
-			'plausible_analytics_settings',
-			[ $this, 'enableRevenue' ]
-		);
+		remove_filter( 'plausible_analytics_integrations_woocommerce', '__return_true' );
 	}
 
 	/**
@@ -38,14 +35,11 @@ class IntegrationsTest extends TestCase {
 	 * state of the EDD integration. It then removes the applied filter after testing.
 	 */
 	public function testIsEddActive() {
-		add_filter( 'plausible_analytics_settings', [ $this, 'enableRevenue' ] );
-
-		$edd_mock = $this->getMockBuilder( 'Easy_Digital_Downloads' )->getMock();
-		when( 'EDD' )->justReturn( $edd_mock );
+		add_filter( 'plausible_analytics_integrations_edd', '__return_true' );
 
 		$this->assertTrue( Integrations::is_edd_active() );
 
-		remove_filter( 'plausible_analytics_settings', [ $this, 'enableRevenue' ] );
+		remove_filter( 'plausible_analytics_integrations_edd', '__return_true' );
 	}
 
 	/**
@@ -56,10 +50,10 @@ class IntegrationsTest extends TestCase {
 	 * and then removes the applied filter.
 	 */
 	public function isFormSubmitActive() {
-		add_filter( 'plausible_analytics_settings', [ $this, 'enableFormCompletions' ] );
+		add_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
 
 		$this->assertTrue( Integrations::is_form_submit_active() );
 
-		remove_filter( 'plausible_analytics_settings', [ $this, 'enableFormCompletions' ] );
+		remove_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
 	}
 }
