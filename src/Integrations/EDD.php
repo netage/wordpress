@@ -23,8 +23,16 @@ class EDD {
 	 * @param $init
 	 */
 	public function __construct( $init = true ) {
+		$uri = defined( 'EDD_SLUG' ) ? EDD_SLUG : 'downloads';
+
+		if ( is_multisite() ) {
+			$uri = get_blog_details()->path . $uri;
+		} else {
+			$uri = '/' . $uri;
+		}
+
 		$this->event_goals = [
-			'view-product'     => sprintf( __( 'Visit /%s*', 'plausible-analytics' ), defined( 'EDD_SLUG' ) ? EDD_SLUG : 'downloads' ),
+			'view-product'     => sprintf( __( 'Visit %s*', 'plausible-analytics' ), $uri ),
 			'add-to-cart'      => __( 'EDD Add to Cart', 'plausible-analytics' ),
 			'remove-from-cart' => __( 'EDD Remove from Cart', 'plausible-analytics' ),
 			'checkout'         => __( 'EDD Start Checkout', 'plausible-analytics' ),
