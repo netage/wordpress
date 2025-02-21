@@ -18,6 +18,7 @@ class WooCommerceTest extends TestCase {
 	 */
 	public function testTrackEnteredCheckout() {
 		when( 'is_checkout' )->justReturn( true );
+		when( 'wc_get_permalink_structure' )->justReturn( [ 'product_base' => 'product' ] );
 
 		$cart_mock = $this->getMockBuilder( 'WC_Cart' )->setMethods(
 			[
@@ -49,6 +50,8 @@ class WooCommerceTest extends TestCase {
 	 * @return void
 	 */
 	public function testTrackPurchase() {
+		when( 'wc_get_permalink_structure' )->justReturn( [ 'product_base' => 'product' ] );
+		
 		$class = new WooCommerce( false );
 		$mock  = $this->getMockBuilder( 'WC_Order' )->setMethods(
 			[
