@@ -45,6 +45,8 @@ class WooCommerce {
 	 * @param array $settings     The updated settings to check for enhanced measurement and WooCommerce integration.
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore Because it interacts with the Plugins API.
 	 */
 	public function maybe_create_woocommerce_funnel( $old_settings, $settings ) {
 		if ( ! Helpers::is_enhanced_measurement_enabled( 'revenue', $settings[ 'enhanced_measurements' ] ) || ! Integrations::is_wc_active() ) {
@@ -64,6 +66,7 @@ class WooCommerce {
 	 * @param $settings
 	 *
 	 * @return void
+	 *
 	 * @codeCoverageIgnore Because we don't want to test if the API is working.
 	 */
 	public function maybe_delete_woocommerce_goals( $old_settings, $settings ) {

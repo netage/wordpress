@@ -44,6 +44,8 @@ class EDD {
 	 * @param array $settings     The updated settings array.
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore Because it interacts with the Plugins API
 	 */
 	public function maybe_create_edd_funnel( $old_settings, $settings ) {
 		if ( ! Helpers::is_enhanced_measurement_enabled( 'revenue', $settings[ 'enhanced_measurements' ] ) || ! Integrations::is_edd_active() ) {
@@ -63,6 +65,8 @@ class EDD {
 	 * @param array $settings     The current updated settings.
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore Because it interacts with the Plugins API.
 	 */
 	public function maybe_delete_edd_goals( $old_settings, $settings ) {
 		$enhanced_measurements = array_filter( $settings[ 'enhanced_measurements' ] );
