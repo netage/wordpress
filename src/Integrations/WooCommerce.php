@@ -29,8 +29,16 @@ class WooCommerce {
 	 * @codeCoverageIgnore
 	 */
 	public function __construct( $init = true ) {
+		$uri = wc_get_permalink_structure()[ 'product_base' ];
+
+		if ( is_multisite() ) {
+			$uri = get_blog_details()->path . $uri;
+		} else {
+			$uri = '/' . $uri;
+		}
+
 		$this->event_goals = [
-			'view-product'     => __( 'Visit /product*', 'plausible-analytics' ),
+			'view-product'     => sprintf( __( 'Visit %s*', 'plausible-analytics' ), $uri ),
 			'add-to-cart'      => __( 'Woo Add to Cart', 'plausible-analytics' ),
 			'remove-from-cart' => __( 'Woo Remove from Cart', 'plausible-analytics' ),
 			'checkout'         => __( 'Woo Start Checkout', 'plausible-analytics' ),

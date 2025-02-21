@@ -71,7 +71,8 @@ class Integrations {
 			}
 
 			if ( $event_key === 'view-product' ) {
-				$goals[] = $this->provisioning->create_goal_request( $event_goal, 'Pageview', null, '/product*' );
+				$path    = preg_replace( '/^.*?\//', '', $event_goal );
+				$goals[] = $this->provisioning->create_goal_request( $event_goal, 'Pageview', null, '/' . $path );
 
 				continue;
 			}
