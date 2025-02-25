@@ -19,15 +19,33 @@ use Plausible\Analytics\WP\Integrations;
 use Plausible\Analytics\WP\Integrations\WooCommerce;
 
 class Provisioning {
-	/**
-	 * @var ClientFactory
-	 */
-	private $client_factory;
+	const CUSTOM_PROPERTIES = [
+		'cart_total',
+		'cart_total_items',
+		'id',
+		'name',
+		'price',
+		'product_id',
+		'product_name',
+		'quantity',
+		'shipping',
+		'subtotal',
+		'subtotal_tax',
+		'tax_class',
+		'total',
+		'total_tax',
+		'variation_id',
+	];
 
 	/**
 	 * @var Client $client
 	 */
-	private $client;
+	public $client;
+
+	/**
+	 * @var ClientFactory
+	 */
+	private $client_factory;
 
 	/**
 	 * @var string[] $custom_event_goals
@@ -90,9 +108,7 @@ class Provisioning {
 
 		add_action( 'update_option_plausible_analytics_settings', [ $this, 'create_shared_link' ], 10, 2 );
 		add_action( 'update_option_plausible_analytics_settings', [ $this, 'maybe_create_goals' ], 10, 2 );
-		add_action( 'update_option_plausible_analytics_settings', [ $this, 'maybe_create_woocommerce_funnel' ], 10, 2 );
 		add_action( 'update_option_plausible_analytics_settings', [ $this, 'maybe_delete_goals' ], 11, 2 );
-		add_action( 'update_option_plausible_analytics_settings', [ $this, 'maybe_delete_woocommerce_goals' ], 11, 2 );
 		add_action( 'update_option_plausible_analytics_settings', [ $this, 'maybe_create_custom_properties' ], 11, 2 );
 	}
 
@@ -179,7 +195,7 @@ class Provisioning {
 	 *
 	 * @return void
 	 */
-	private function create_goals( $goals ) {
+	public function create_goals( $goals ) {
 		if ( empty( $goals ) ) {
 			return; // @codeCoverageIgnore
 		}
@@ -253,7 +269,7 @@ class Provisioning {
 	 * @return void
 	 * @codeCoverageIgnore Because this method should be mocked in tests if needed.
 	 */
-	private function create_funnel( $name, $steps ) {
+	public function create_funnel( $name, $steps ) {
 		$create_request = new Client\Model\FunnelCreateRequest(
 			[
 				'funnel' => [
@@ -365,7 +381,7 @@ class Provisioning {
 	 * @return false|mixed
 	 * @codeCoverageIgnore Because it can't be unit tested.
 	 */
-	private function array_search_contains( $string, $haystack ) {
+	public function array_search_contains( $string, $haystack ) {
 		if ( preg_match( '/\([A-Z]*?\)/', $string ) ) {
 			$string = preg_replace( '/ \([A-Z]*?\)/', '', $string );
 		}
@@ -410,8 +426,8 @@ class Provisioning {
 		/**
 		 * Create Custom Properties for WooCommerce integration.
 		 */
-		if ( Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) && Integrations::is_wc_active() ) {
-			foreach ( WooCommerce::CUSTOM_PROPERTIES as $property ) {
+		if ( Helpers::is_enhanced_measurement_enabled( 'revenue', $enhanced_measurements ) && ( Integrations::is_wc_active() || Integrations::is_edd_active() ) ) {
+			foreach ( self::CUSTOM_PROPERTIES as $property ) {
 				$properties[] = new Client\Model\CustomProp( [ 'custom_prop' => [ 'key' => $property ] ] );
 			}
 		}

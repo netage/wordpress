@@ -31,9 +31,10 @@ class Integrations {
 
 		// Easy Digital Downloads
 		if ( self::is_edd_active() ) {
-			// new Integrations\EDD();
+			new Integrations\EDD();
 		}
 
+		// Form Plugins
 		if ( self::is_form_submit_active() ) {
 			new Integrations\FormSubmit();
 		}
@@ -60,9 +61,6 @@ class Integrations {
 	 * @return mixed|null
 	 */
 	public static function is_form_submit_active() {
-		return apply_filters(
-			'plausible_analytics_integrations_form_submit',
-			Helpers::is_enhanced_measurement_enabled( 'form-completions' )
-		);
+		return apply_filters( 'plausible_analytics_integrations_form_submit', Helpers::is_enhanced_measurement_enabled( 'form-completions' ) );
 	}
 }
