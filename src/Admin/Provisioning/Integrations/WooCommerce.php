@@ -70,6 +70,10 @@ class WooCommerce {
 	 * @codeCoverageIgnore Because we don't want to test if the API is working.
 	 */
 	public function maybe_delete_woocommerce_goals( $old_settings, $settings ) {
+		if ( ! Integrations::is_wc_active() ) {
+			return; // @codeCoverageIgnore
+		}
+
 		$enhanced_measurements = array_filter( $settings[ 'enhanced_measurements' ] );
 
 		// Setting is enabled, no need to continue.
