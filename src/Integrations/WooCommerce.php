@@ -154,8 +154,6 @@ class WooCommerce {
 
 		if ( ! $product ) {
 			return;
-
-			sanitize_title();
 		}
 		?>
 		<script>
