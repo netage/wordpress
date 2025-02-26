@@ -262,6 +262,7 @@ class Upgrades {
 	 * v2.0.8 and older contained a bug that caused the Enhanced Measurement option to not be an array in some cases.
 	 *
 	 * @return void
+	 * @codeCoverageIgnore
 	 */
 	public function upgrade_to_210() {
 		$settings = Helpers::get_settings();
@@ -281,6 +282,7 @@ class Upgrades {
 	 * @since v2.3.0
 	 *
 	 * @return void
+	 * @codeCoverageIgnore
 	 */
 	public function upgrade_to_230() {
 		$settings = Helpers::get_settings();
