@@ -279,10 +279,11 @@ class Upgrades {
 	/**
 	 * If EDD is active and Ecommerce is enabled, create goals after updating the plugin.
 	 *
-	 * @since v2.3.0
+	 * @since              v2.3.0
 	 *
 	 * @return void
-	 * @codeCoverageIgnore
+	 *
+	 * @codeCoverageIgnore because all we'd be doing is testing the Plugins API.
 	 */
 	public function upgrade_to_230() {
 		$settings = Helpers::get_settings();
