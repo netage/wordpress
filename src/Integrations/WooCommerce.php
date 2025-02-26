@@ -154,6 +154,8 @@ class WooCommerce {
 
 		if ( ! $product ) {
 			return;
+
+			sanitize_title();
 		}
 		?>
 		<script>
@@ -163,7 +165,7 @@ class WooCommerce {
 			plausibleAddToCartForm.classList.add('plausible-event-name=<?php echo str_replace( ' ', '+', $this->event_goals[ 'add-to-cart' ] ); ?>');
 			plausibleAddToCartForm.classList.add('plausible-event-quantity=' + plausibleQuantity.value);
 			plausibleAddToCartForm.classList.add('plausible-event-product_id=<?php echo $product->get_id(); ?>');
-			plausibleAddToCartForm.classList.add('plausible-event-product_name=<?php echo str_replace( ' ', '+', $product->get_name( null ) ); ?>');
+			plausibleAddToCartForm.classList.add('plausible-event-product_name=<?php echo str_replace( [ ' ', '&' ], '+', addslashes( $product->get_name( null ) ) ); ?>');
 			plausibleAddToCartForm.classList.add('plausible-event-price=<?php echo $product->get_price( null ); ?>');
 
 			plausibleQuantity.addEventListener('change', function (e) {
