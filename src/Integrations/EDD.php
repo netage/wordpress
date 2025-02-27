@@ -193,6 +193,6 @@ class EDD {
 
 		$proxy = new Proxy( false );
 
-		$proxy->do_request( $this->event_goals[ 'purchase' ], null, null, $props );
+		$proxy->do_request( $this->event_goals[ 'purchase' ], null, edd_get_checkout_uri(), $props );
 	}
 }
