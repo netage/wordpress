@@ -51,9 +51,9 @@ Plausible is privacy-friendly analytics. All the site measurement is carried out
 
 Plausible is useful. Segment your audience by any metric you click on. Answer the important questions about your visitors, content and referral sources. Analyze paid campaigns using UTM parameters. Track site search terms, outbound link clicks, file downloads, form completions, 404 error pages, post authors, post categories and custom taxonomies without manually configuring anything or writing any code.
 
-### Built-in WooCommerce analytics
+### Built-in WooCommerce and Easy Digital Downloads analytics
 
-Plausible provides an automatic WooCommerce analytics solution to track conversions, revenue and attribution. Activities tracked include adding to cart, removing from cart, entering checkout and completing a purchase. A purchase funnel looking at the user journey from viewing a product to making a purchase is enabled to help you see the drop-off rates between the different steps, understand your cart abandonment rate and increase your conversions.
+Plausible provides automated WooCommerce and Easy Digital Downloads analytics solutions to track conversions, revenue and attribution. Activities tracked include adding to cart, removing from cart, entering checkout and completing a purchase. A purchase funnel looking at the user journey from viewing a product to making a purchase is enabled to help you see the drop-off rates between the different steps, understand your cart abandonment rate and increase your conversions.
 
 ### Invite team members and share your dashboard
 
@@ -71,7 +71,7 @@ Plausible is open source analytics. Our source code is available and accessible 
 * Get more accurate stats and count those who use adblockers by running the Plausible script as a first-party connection from your domain name
 * View your Plausible stats directly in your WordPress dashboard (you can grant access to other user roles too)
 * Tracking of admin users is disabled by default (you can also disable tracking of other user roles)
-* Enable WooCommerce revenue, file downloads, external link clicks, site search terms, form completions and 404 error pages tracking 
+* Enable WooCommerce or Easy Digital Downloads revenue tracking, file downloads, external link clicks, site search terms, form completions and 404 error pages tracking 
 * Enable automated tracking of post authors, post categories and custom taxonomies for better content analysis
 * Custom events and custom dimensions can be setup using CSS class names directly in the WordPress editor
 * Integrate with Google Search Console so you can see search queries people use to find your site in Google's search results
