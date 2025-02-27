@@ -160,6 +160,7 @@ class EDD {
 		$props = apply_filters(
 			'plausible_analytics_edd_entered_checkout_custom_properties',
 			[
+				// @todo Add cart contents
 				'subtotal' => edd_get_cart_subtotal(),
 				'tax'      => edd_get_cart_tax(),
 				'total'    => edd_get_cart_total(),
@@ -184,7 +185,7 @@ class EDD {
 			'plausible_analytics_edd_purchase_custom_properties',
 			[
 				'revenue' => [
-					'amount'   => number_format( (float) $payment->total, 2 ),
+					'amount'   => $payment->total,
 					'currency' => $payment->currency,
 				],
 			]
