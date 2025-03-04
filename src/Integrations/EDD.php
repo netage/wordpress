@@ -193,6 +193,7 @@ class EDD {
 			$order = edd_get_order_by( 'payment_key', $session[ 'purchase_key' ] );
 		}
 
+		// Don't track on page reload.
 		if ( ! $order || edd_get_order_meta( $order->id, Integrations::PURCHASE_TRACKED_META_KEY, true ) ) {
 			return;
 		}
