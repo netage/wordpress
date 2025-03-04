@@ -16,8 +16,6 @@ use WC_Cart;
 use WC_Product;
 
 class WooCommerce {
-	const PURCHASE_TRACKED_META_KEY = '_plausible_analytics_purchase_tracked';
-
 	/**
 	 * @var array Custom Event Goals used to track Events in WooCommerce.
 	 */
@@ -324,7 +322,7 @@ class WooCommerce {
 	 */
 	public function track_purchase( $order_id ) {
 		$order      = wc_get_order( $order_id );
-		$is_tracked = $order->get_meta( self::PURCHASE_TRACKED_META_KEY );
+		$is_tracked = $order->get_meta( Integrations::PURCHASE_TRACKED_META_KEY );
 
 		if ( $is_tracked ) {
 			return; // @codeCoverageIgnore
@@ -339,7 +337,7 @@ class WooCommerce {
 
 		echo sprintf( Integrations::SCRIPT_WRAPPER, "window.plausible( '$label', $props )" );
 
-		$order->add_meta_data( self::PURCHASE_TRACKED_META_KEY, true );
+		$order->add_meta_data( Integrations::PURCHASE_TRACKED_META_KEY, true );
 		$order->save();
 	}
 }

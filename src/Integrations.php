@@ -10,7 +10,9 @@
 namespace Plausible\Analytics\WP;
 
 class Integrations {
-	const SCRIPT_WRAPPER = '<script defer id="plausible-analytics-integration-tracking">document.addEventListener("DOMContentLoaded", () => { %s });</script>';
+	const PURCHASE_TRACKED_META_KEY = '_plausible_analytics_purchase_tracked';
+
+	const SCRIPT_WRAPPER            = '<script defer id="plausible-analytics-integration-tracking">document.addEventListener("DOMContentLoaded", () => { %s });</script>';
 
 	/**
 	 * Build class.

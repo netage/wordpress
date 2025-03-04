@@ -9,6 +9,7 @@
 
 namespace Plausible\Analytics\WP\Integrations;
 
+use Plausible\Analytics\WP\Integrations;
 use Plausible\Analytics\WP\Proxy;
 
 /**
@@ -57,7 +58,7 @@ class EDD {
 		add_action( 'edd_post_add_to_cart', [ $this, 'track_add_to_cart' ], 10, 3 );
 		add_action( 'edd_pre_remove_from_cart', [ $this, 'track_remove_cart_item' ], 10 );
 		add_action( 'edd_before_purchase_form', [ $this, 'track_entered_checkout' ] );
-		add_action( 'edd_complete_purchase', [ $this, 'track_purchase' ], 10, 2 );
+		add_action( 'wp_head', [ $this, 'track_purchase' ] );
 	}
 
 	/**
@@ -173,26 +174,44 @@ class EDD {
 	}
 
 	/**
-	 * Tracks the "purchase" event with relevant order and payment data.
+	 * Tracks the "purchase" event with relevant payment data.
 	 *
-	 * @param int    $order_id The unique identifier of the order.
-	 * @param object $payment  The payment object containing details like total amount and currency.
+	 * We choose to render a JS script, instead of hooking into an action, because user-agent information
+	 * gets lost when the user is first redirected to a Payment Provider.
 	 *
 	 * @return void
 	 */
-	public function track_purchase( $order_id, $payment ) {
-		$props = apply_filters(
-			'plausible_analytics_edd_purchase_custom_properties',
-			[
-				'revenue' => [
-					'amount'   => $payment->total,
-					'currency' => $payment->currency,
-				],
-			]
+	public function track_purchase() {
+		if ( ! edd_is_success_page() ) {
+			return; // @codeCoverageIgnore
+		}
+
+		$session = edd_get_purchase_session();
+		$order   = null;
+
+		if ( ! empty( $session[ 'purchase_key' ] ) ) {
+			$order = edd_get_order_by( 'payment_key', $session[ 'purchase_key' ] );
+		}
+
+		if ( ! $order || edd_get_order_meta( $order->id, Integrations::PURCHASE_TRACKED_META_KEY, true ) ) {
+			return;
+		}
+
+		$props = wp_json_encode(
+			apply_filters(
+				'plausible_analytics_edd_purchase_custom_properties',
+				[
+					'revenue' => [
+						'amount'   => $order->total,
+						'currency' => $order->currency,
+					],
+				]
+			)
 		);
+		$label = $this->event_goals[ 'purchase' ];
 
-		$proxy = new Proxy( false );
+		echo sprintf( Integrations::SCRIPT_WRAPPER, "window.plausible( '$label', $props )" );
 
-		$proxy->do_request( $this->event_goals[ 'purchase' ], null, edd_get_checkout_uri(), $props );
+		edd_add_order_meta( $order->id, Integrations::PURCHASE_TRACKED_META_KEY, true );
 	}
 }
