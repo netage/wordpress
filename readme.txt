@@ -5,7 +5,7 @@ Tags: analytics, google analytics, web analytics, stats, privacy
 Requires at least: 5.9
 Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 License: Massachusetts Institute of Technology (MIT) license
 License URI: https://opensource.org/licenses/MIT
 
@@ -154,6 +154,12 @@ Contact us: https://plausible.io/contact
 Please make sure you make a backup of your database before updating any version to ensure that none of your data is lost.
 
 == Changelog ==
+
+= 2.3.0 | March 5th, 2025 =
+* Improved: Domain Name is now validated before it's stored in the database.
+* Added: Easy Digital Downloads integration, which will automatically be enabled when Ecommerce Revenue is enabled.
+* Fixed: WooCommerce integration didn't work properly in multisite environments and environments with non-default permalink structures.
+* Fixed: Domain Name's with more than 1 subdirectory couldn't create tokens, because it would result in a 404 in the opened window.
 
 = 2.2.0 | February 5th, 2025 =
 Fixed: N/A in CE edition message wasn't shown properly when certain options were toggled.
