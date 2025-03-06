@@ -10,56 +10,55 @@ use Plausible\Analytics\WP\Integrations;
 use function Brain\Monkey\Functions\when;
 
 class IntegrationsTest extends TestCase {
+	public function testInit() {
+		add_filter( 'plausible_analytics_integrations_woocommerce', '__return_true' );
+		add_filter( 'plausible_analytics_integrations_edd', '__return_true' );
+		add_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
+
+		when( 'wc_get_permalink_structure' )->justReturn( [ 'product_base' => 'product' ] );
+
+		new Integrations();
+
+		remove_filter( 'plausible_analytics_integrations_woocommerce', '__return_true' );
+		remove_filter( 'plausible_analytics_integrations_edd', '__return_true' );
+		remove_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
+
+		$this->assertTrue( class_exists( '\Plausible\Analytics\WP\Integrations\WooCommerce' ) );
+		$this->assertTrue( class_exists( '\Plausible\Analytics\WP\Integrations\EDD' ) );
+		$this->assertTrue( class_exists( '\Plausible\Analytics\WP\Integrations\FormSubmit' ) );
+	}
+
 	/**
 	 * Tests whether the WooCommerce integration is currently active.
-	 *
-	 * This method temporarily applies a filter to enable revenue tracking functionality,
-	 * mocks the function_exists call to simulate the existence of WooCommerce functions,
-	 * verifies the active state of the WooCommerce integration through an assertion,
-	 * and finally removes the applied filter.
 	 */
 	public function testIsWcActive() {
-		add_filter( 'plausible_analytics_settings', [ $this, 'enableRevenue' ] );
+		add_filter( 'plausible_analytics_integrations_woocommerce', '__return_true' );
 
 		// WC is already mocked.
 		$this->assertTrue( Integrations::is_wc_active() );
 
-		remove_filter(
-			'plausible_analytics_settings',
-			[ $this, 'enableRevenue' ]
-		);
+		remove_filter( 'plausible_analytics_integrations_woocommerce', '__return_true' );
 	}
 
 	/**
 	 * Tests if the Easy Digital Downloads (EDD) integration is active.
-	 *
-	 * This method applies a temporary filter to enable revenue tracking, mocks
-	 * the existence of required functions using a stub, and asserts the active
-	 * state of the EDD integration. It then removes the applied filter after testing.
 	 */
 	public function testIsEddActive() {
-		add_filter( 'plausible_analytics_settings', [ $this, 'enableRevenue' ] );
-
-		$edd_mock = $this->getMockBuilder( 'Easy_Digital_Downloads' )->getMock();
-		when( 'EDD' )->justReturn( $edd_mock );
+		add_filter( 'plausible_analytics_integrations_edd', '__return_true' );
 
 		$this->assertTrue( Integrations::is_edd_active() );
 
-		remove_filter( 'plausible_analytics_settings', [ $this, 'enableRevenue' ] );
+		remove_filter( 'plausible_analytics_integrations_edd', '__return_true' );
 	}
 
 	/**
 	 * Determines if the form submission functionality is currently active.
-	 *
-	 * This method temporarily applies a filter to enable form completions,
-	 * verifies the active state of the form submission through an assertion,
-	 * and then removes the applied filter.
 	 */
 	public function isFormSubmitActive() {
-		add_filter( 'plausible_analytics_settings', [ $this, 'enableFormCompletions' ] );
+		add_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
 
 		$this->assertTrue( Integrations::is_form_submit_active() );
 
-		remove_filter( 'plausible_analytics_settings', [ $this, 'enableFormCompletions' ] );
+		remove_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
 	}
 }
