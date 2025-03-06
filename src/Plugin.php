@@ -20,7 +20,7 @@ final class Plugin {
 		add_action( 'plugins_loaded', [ $this, 'register_services' ], 9 );
 
 		// Load text domain.
-		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
+		add_action( 'init', [ $this, 'load_plugin_textdomain' ], 1000 );
 	}
 
 	/**
