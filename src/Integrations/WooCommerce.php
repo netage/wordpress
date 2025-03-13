@@ -178,6 +178,8 @@ class WooCommerce {
 	 * Track add to cart actions by direct link, e.g. ?product_type=download&add-to-cart=1&quantity=1
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore Because we can't test XHR here.
 	 */
 	public function track_direct_add_to_cart() {
 		if ( ! isset( $_REQUEST[ 'add-to-cart' ] ) || ! is_numeric( wp_unslash( $_REQUEST[ 'add-to-cart' ] ) ) ) {
