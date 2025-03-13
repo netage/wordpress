@@ -7,6 +7,7 @@ namespace Plausible\Analytics\Tests\Integration\Admin;
 
 use Plausible\Analytics\Tests\TestCase;
 use Plausible\Analytics\WP\Admin\Upgrades;
+use Plausible\Analytics\WP\Cron;
 use Plausible\Analytics\WP\Helpers;
 
 class UpgradesTest extends TestCase {
@@ -26,5 +27,16 @@ class UpgradesTest extends TestCase {
 		$enhanced_measurements = Helpers::get_settings()[ 'enhanced_measurements' ];
 
 		$this->assertIsArray( $enhanced_measurements );
+	}
+
+	/**
+	 * @see Upgrades::upgrade_to_231()
+	 * @return void
+	 */
+	public function testUpgradeTo231() {
+		$class = new Upgrades();
+		$class->upgrade_to_231();
+
+		$this->assertNotEmpty( wp_next_scheduled( Cron::TASK_NAME ) );
 	}
 }
