@@ -13,6 +13,7 @@ use Plausible\Analytics\WP\Proxy;
 class FormSubmit {
 	/**
 	 * Build class.
+	 *
 	 * @codeCoverageIgnore
 	 */
 	public function __construct() {
@@ -21,7 +22,9 @@ class FormSubmit {
 
 	/**
 	 * Init
+	 *
 	 * @return void
+	 *
 	 * @codeCoverageIgnore
 	 */
 	private function init() {
@@ -42,6 +45,7 @@ class FormSubmit {
 	/**
 	 * Enqueues the required JavaScript for form submissions integration.
 	 * @return void
+	 *
 	 * @codeCoverageIgnore because there's nothing to test here.
 	 */
 	public function add_js() {
@@ -92,9 +96,12 @@ class FormSubmit {
 	 * @param $uri
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore because we can't test XHR requests here.
 	 */
 	private function track_submission( $uri ) {
 		$proxy = new Proxy( false );
+
 		$proxy->do_request(
 			__( 'WP Form Completions', 'plausible-analytics' ),
 			null,
@@ -106,12 +113,14 @@ class FormSubmit {
 	/**
 	 * Compatibility fix for Gravity Forms.
 	 *
-	 * @action gform_after_submission
+	 * @action             gform_after_submission
 	 *
 	 * @param $form
 	 * @param $entry
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore because we can't test XHR requests here.
 	 */
 	public function track_gravity_forms_submission( $form ) {
 		$uri = str_replace( home_url(), '', $form[ 'source_url' ] ) ?? '';
