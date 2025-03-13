@@ -25,6 +25,11 @@ final class Plugin {
 		add_action( 'init', [ $this, 'load_plugin_textdomain' ], 1000 );
 	}
 
+	/**
+	 * Register plugin (de)activation hooks and cron job.
+	 *
+	 * @return void
+	 */
 	public function setup() {
 		new Setup();
 	}
