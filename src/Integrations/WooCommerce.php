@@ -71,8 +71,8 @@ class WooCommerce {
 		add_action( 'woocommerce_after_add_to_cart_form', [ $this, 'track_add_to_cart_on_product_page' ] );
 		add_action( 'woocommerce_store_api_validate_add_to_cart', [ $this, 'track_add_to_cart' ], 10, 2 );
 		add_action( 'woocommerce_ajax_added_to_cart', [ $this, 'track_ajax_add_to_cart' ] );
-		/** @see \WC_Form_Handler::add_to_cart_action() runs on priority 20. */
-		add_action( 'wp_loaded', [ $this, 'track_direct_add_to_cart' ], 21 );
+		/** @see \WC_Form_Handler::add_to_cart_action() runs on priority 20. We need to run before that, in case redirect is enabled. */
+		add_action( 'wp_loaded', [ $this, 'track_direct_add_to_cart' ], 19 );
 		add_action( 'woocommerce_remove_cart_item', [ $this, 'track_remove_cart_item' ], 10, 2 );
 		add_action( 'wp_head', [ $this, 'track_entered_checkout' ] );
 		add_action( 'woocommerce_thankyou', [ $this, 'track_purchase' ] );
