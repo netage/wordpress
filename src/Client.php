@@ -212,7 +212,7 @@ class Client {
 
 		Messages::set_error( sprintf( $error_message, $message ) );
 
-		$caps = $this->store_capabilities();
+		$caps = $this->update_capabilities();
 
 		wp_send_json_error( [ 'capabilities' => $caps ], $code );
 	}
@@ -224,7 +224,7 @@ class Client {
 	 *
 	 * @return false|array
 	 */
-	private function store_capabilities( $token = '' ) {
+	private function update_capabilities( $token = '' ) {
 		$client_factory = new ClientFactory( $token );
 		/** @var Client $client */
 		$client = $client_factory->build();
