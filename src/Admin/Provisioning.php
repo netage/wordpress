@@ -16,7 +16,6 @@ use Plausible\Analytics\WP\Client\Model\GoalCreateRequestRevenue;
 use Plausible\Analytics\WP\ClientFactory;
 use Plausible\Analytics\WP\Helpers;
 use Plausible\Analytics\WP\Integrations;
-use Plausible\Analytics\WP\Integrations\WooCommerce;
 
 class Provisioning {
 	const CUSTOM_PROPERTIES = [
