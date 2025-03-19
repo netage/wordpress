@@ -181,7 +181,7 @@ class Page extends API {
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'tagged-events',
-							'caps'  => [ self::CAP_GOALS, self::CAP_PROPS ],
+							'caps'  => [ self::CAP_GOALS ],
 						],
 						'revenue'          => [
 							'label' => esc_html__( 'Ecommerce revenue', 'plausible-analytics' ),
@@ -205,7 +205,7 @@ class Page extends API {
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'form-completions',
-							'caps'  => [ self::CAP_GOALS, self::CAP_PROPS ],
+							'caps'  => [ self::CAP_GOALS ],
 						],
 						'hash'             => [
 							'label' => esc_html__( 'Hash-based routing', 'plausible-analytics' ),
