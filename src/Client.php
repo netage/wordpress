@@ -223,6 +223,8 @@ class Client {
 	 * @param $token
 	 *
 	 * @return false|array
+	 *
+	 * @codeCoverageIgnore
 	 */
 	private function update_capabilities( $token = '' ) {
 		$client_factory = new ClientFactory( $token );
