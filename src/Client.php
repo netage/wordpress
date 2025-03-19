@@ -212,7 +212,45 @@ class Client {
 
 		Messages::set_error( sprintf( $error_message, $message ) );
 
-		wp_send_json_error( null, $code );
+		$caps = $this->store_capabilities();
+
+		wp_send_json_error( [ 'capabilities' => $caps ], $code );
+	}
+
+	/**
+	 * Stores the capabilities for the currently entered API token in the DB for later use.
+	 *
+	 * @param $token
+	 *
+	 * @return false|array
+	 */
+	private function store_capabilities( $token = '' ) {
+		$client_factory = new ClientFactory( $token );
+		/** @var Client $client */
+		$client = $client_factory->build();
+
+		if ( ! $client instanceof Client ) {
+			return false;
+		}
+
+		/** @var Client\Model\CapabilitiesFeatures $features */
+		$features = $client->get_features();
+
+		if ( ! $features ) {
+			return false;
+		}
+
+		$caps = [
+			'funnels' => $features->getFunnels(),
+			'goals'   => $features->getGoals(),
+			'props'   => $features->getProps(),
+			'revenue' => $features->getRevenueGoals(),
+			'stats'   => $features->getStatsApi(),
+		];
+
+		update_option( 'plausible_analytics_api_token_caps', $caps );
+
+		return $caps;
 	}
 
 	/**
