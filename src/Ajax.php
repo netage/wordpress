@@ -290,6 +290,7 @@ class Ajax {
 			// Validate Plugin Token, if this is the Plugin Token field.
 			if ( $option->name === 'api_token' ) {
 				$this->validate_api_token( $option->value );
+				$this->store_capabilities( $option->value );
 
 				$additional = $this->maybe_render_additional_message( $option->name, $option->value );
 
@@ -333,5 +334,39 @@ class Ajax {
 
 			wp_send_json_error( 'invalid_api_token', 400 );
 		}
+	}
+
+	/**
+	 * Stores the capabilities for the currently entered API token in the DB for later use.
+	 *
+	 * @param $token
+	 *
+	 * @return void
+	 */
+	private function store_capabilities( $token = '' ) {
+		$client_factory = new ClientFactory( $token );
+		/** @var Client $client */
+		$client = $client_factory->build();
+
+		if ( ! $client instanceof Client ) {
+			return;
+		}
+
+		/** @var Client\Model\CapabilitiesFeatures $features */
+		$features = $client->get_features();
+
+		if ( ! $features ) {
+			return;
+		}
+
+		$caps = [
+			'funnels' => $features->getFunnels(),
+			'goals'   => $features->getGoals(),
+			'props'   => $features->getProps(),
+			'revenue' => $features->getRevenueGoals(),
+			'stats'   => $features->getStatsApi(),
+		];
+
+		update_option( 'plausible_analytics_api_token_caps', $caps );
 	}
 }

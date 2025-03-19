@@ -54,6 +54,14 @@ class Page extends API {
 		'hook_type' => 'success',
 	];
 
+	const CAP_GOALS                                 = 'goals';
+
+	const CAP_PROPS                                 = 'props';
+
+	const CAP_FUNNELS                               = 'funnels';
+
+	const CAP_REVENUE                               = 'revenue';
+
 	/**
 	 * @var array|array[] $fields
 	 */
@@ -117,15 +125,11 @@ class Page extends API {
 							'value' => $settings[ 'api_token' ],
 						],
 						[
-							'label'    => empty( $settings[ 'domain_name' ] ) || empty( $settings[ 'api_token' ] ) ?
-								esc_html__( 'Connect', 'plausible-analytics' ) :
+							'label'    => empty( $settings[ 'domain_name' ] ) || empty( $settings[ 'api_token' ] ) ? esc_html__( 'Connect', 'plausible-analytics' ) :
 								esc_html__( 'Connected', 'plausible-analytics' ),
 							'slug'     => 'connect_plausible_analytics',
 							'type'     => 'button',
-							'disabled' => empty( $settings[ 'domain_name' ] ) ||
-								empty( $settings[ 'api_token' ] ) ||
-								! $this->client instanceof Client ||
-								$this->client->is_api_token_valid(),
+							'disabled' => empty( $settings[ 'domain_name' ] ) || empty( $settings[ 'api_token' ] ) || ! $this->client instanceof Client || $this->client->is_api_token_valid(),
 						],
 					],
 				],
@@ -145,6 +149,7 @@ class Page extends API {
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => '404',
+							'caps'  => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
 						],
 						'outbound-links'   => [
 							'label' => esc_html__( 'Outbound links', 'plausible-analytics' ),
@@ -152,27 +157,31 @@ class Page extends API {
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'outbound-links',
+							'caps'  => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
 						],
 						'file-downloads'   => [
-							'label' => esc_html__( 'File downloads', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-file-downloads',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => 'file-downloads',
+							'label'    => esc_html__( 'File downloads', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-file-downloads',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => 'file-downloads',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
 						],
 						'search'           => [
-							'label' => esc_html__( 'Search queries', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-enable-site-search-tracking',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => 'search',
+							'label'    => esc_html__( 'Search queries', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-enable-site-search-tracking',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => 'search',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_PROPS ] ),
 						],
 						'tagged-events'    => [
-							'label' => esc_html__( 'Custom events', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-setup-custom-events-to-track-goal-conversions',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => 'tagged-events',
+							'label'    => esc_html__( 'Custom events', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-setup-custom-events-to-track-goal-conversions',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => 'tagged-events',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_PROPS ] ),
 						],
 						'revenue'          => [
 							'label'    => esc_html__( 'Ecommerce revenue', 'plausible-analytics' ),
@@ -180,21 +189,23 @@ class Page extends API {
 							'slug'     => 'enhanced_measurements',
 							'type'     => 'checkbox',
 							'value'    => 'revenue',
-							'disabled' => ! empty( $settings[ 'self_hosted_domain' ] ),
+							'disabled' => ! empty( $settings[ 'self_hosted_domain' ] ) || ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_FUNNELS, self::CAP_PROPS, self::CAP_REVENUE ] ),
 						],
 						'pageview-props'   => [
-							'label' => esc_html__( 'Authors and categories', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-send-custom-properties',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => 'pageview-props',
+							'label'    => esc_html__( 'Authors and categories', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-send-custom-properties',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => 'pageview-props',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_PROPS ] ),
 						],
 						'form-completions' => [
-							'label' => esc_html__( 'Form completions', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-form-completions',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => 'form-completions',
+							'label'    => esc_html__( 'Form completions', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-form-completions',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => 'form-completions',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_PROPS ] ),
 						],
 						'hash'             => [
 							'label' => esc_html__( 'Hash-based routing', 'plausible-analytics' ),
@@ -227,8 +238,7 @@ class Page extends API {
 						get_site_url( null, rest_get_url_prefix() ),
 						empty(
 						Helpers::get_settings()[ 'proxy_enabled' ]
-						) ? 'a random directory/file for storing the JS file' :
-							'a JS file, called <code>' . str_replace(
+						) ? 'a random directory/file for storing the JS file' : 'a JS file, called <code>' . str_replace(
 								ABSPATH,
 								'',
 								Helpers::get_proxy_resource( 'cache_dir' ) . Helpers::get_proxy_resource(
@@ -263,8 +273,7 @@ class Page extends API {
 							'slug'     => 'enable_analytics_dashboard',
 							'type'     => 'checkbox',
 							'value'    => 'on',
-							'disabled' => empty( Helpers::get_settings()[ 'api_token' ] ) &&
-								empty( Helpers::get_settings()[ 'self_hosted_domain' ] ),
+							'disabled' => empty( Helpers::get_settings()[ 'api_token' ] ) && empty( Helpers::get_settings()[ 'self_hosted_domain' ] ),
 						],
 					],
 				],
@@ -367,8 +376,7 @@ class Page extends API {
 							'label'       => esc_html__( 'Domain name', 'plausible-analytics' ),
 							'slug'        => 'self_hosted_domain',
 							'type'        => 'text',
-							'value'       => defined( 'PLAUSIBLE_SELF_HOSTED_DOMAIN' ) ? PLAUSIBLE_SELF_HOSTED_DOMAIN :
-								$settings[ 'self_hosted_domain' ],
+							'value'       => defined( 'PLAUSIBLE_SELF_HOSTED_DOMAIN' ) ? PLAUSIBLE_SELF_HOSTED_DOMAIN : $settings[ 'self_hosted_domain' ],
 							'placeholder' => 'e.g. ' . Helpers::get_domain(),
 							'disabled'    => Helpers::proxy_enabled(),
 						],
@@ -478,6 +486,22 @@ class Page extends API {
 		new Hooks();
 	}
 
+	private function token_has_cap( $caps ) {
+		static $stored_caps = [];
+
+		if ( empty( $stored_caps ) ) {
+			$stored_caps = get_option( 'plausible_analytics_api_token_caps', [] );
+		}
+
+		foreach ( $caps as $cap ) {
+			if ( empty( $stored_caps[ $cap ] ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Load all available user roles as a list (sorted alphabetically) of checkboxes to be processed by the Settings
 	 * API.
@@ -552,8 +576,7 @@ class Page extends API {
 		/**
 		 * Don't show the Analytics dashboard, if View Stats is disabled.
 		 */
-		if ( ! empty( $settings[ 'enable_analytics_dashboard' ] ) ||
-			( ! empty( $settings[ 'self_hosted_domain' ] ) && ! empty( $settings[ 'self_hosted_shared_link' ] ) ) ) {
+		if ( ! empty( $settings[ 'enable_analytics_dashboard' ] ) || ( ! empty( $settings[ 'self_hosted_domain' ] ) && ! empty( $settings[ 'self_hosted_shared_link' ] ) ) ) {
 			// Setup `Analytics` page under Dashboard.
 			add_dashboard_page(
 				esc_html__( 'Analytics', 'plausible-analytics' ),
@@ -649,9 +672,7 @@ class Page extends API {
 		 * For regular users, the shared link is provisioned by the API, so it shouldn't be empty.
 		 * @since v2.0.3
 		 */
-		if ( ( ! $self_hosted && ! empty( $analytics_enabled ) && ! empty( $shared_link ) ) ||
-			( $self_hosted && ! empty( $shared_link ) ) ||
-			strpos( $shared_link, 'XXXXXX' ) !== false ) {
+		if ( ( ! $self_hosted && ! empty( $analytics_enabled ) && ! empty( $shared_link ) ) || ( $self_hosted && ! empty( $shared_link ) ) || strpos( $shared_link, 'XXXXXX' ) !== false ) {
 			$page_url = isset( $_GET[ 'page-url' ] ) ? esc_url( $_GET[ 'page-url' ] ) : '';
 
 			// Append individual page URL if it exists.

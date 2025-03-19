@@ -87,7 +87,7 @@ class Client {
 	 *
 	 * @return false|Client\Model\CapabilitiesFeatures
 	 */
-	private function get_features() {
+	public function get_features() {
 		$capabilities = $this->get_capabilities();
 
 		if ( $capabilities instanceof Capabilities ) {
