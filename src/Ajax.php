@@ -283,6 +283,8 @@ class Ajax {
 			wp_send_json_error( null, 400 );
 		}
 
+		$caps = [];
+
 		foreach ( $options as $option ) {
 			// Clean spaces
 			$settings[ $option->name ] = trim( $option->value );
@@ -290,7 +292,7 @@ class Ajax {
 			// Validate Plugin Token, if this is the Plugin Token field.
 			if ( $option->name === 'api_token' ) {
 				$this->validate_api_token( $option->value );
-				$this->store_capabilities( $option->value );
+				$caps = $this->store_capabilities( $option->value );
 
 				$additional = $this->maybe_render_additional_message( $option->name, $option->value );
 
@@ -301,6 +303,10 @@ class Ajax {
 		update_option( 'plausible_analytics_settings', $settings );
 
 		Messages::set_success( __( 'Settings saved.', 'plausible-analytics' ) );
+
+		if ( ! empty( $caps ) ) {
+			wp_send_json_success( [ 'capabilities' => $caps ], 200 );
+		}
 
 		wp_send_json_success( null, 200 );
 	}
@@ -341,7 +347,7 @@ class Ajax {
 	 *
 	 * @param $token
 	 *
-	 * @return void
+	 * @return false|array
 	 */
 	private function store_capabilities( $token = '' ) {
 		$client_factory = new ClientFactory( $token );
@@ -349,14 +355,14 @@ class Ajax {
 		$client = $client_factory->build();
 
 		if ( ! $client instanceof Client ) {
-			return;
+			return false;
 		}
 
 		/** @var Client\Model\CapabilitiesFeatures $features */
 		$features = $client->get_features();
 
 		if ( ! $features ) {
-			return;
+			return false;
 		}
 
 		$caps = [
@@ -368,5 +374,7 @@ class Ajax {
 		];
 
 		update_option( 'plausible_analytics_api_token_caps', $caps );
+
+		return $caps;
 	}
 }

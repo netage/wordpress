@@ -144,20 +144,22 @@ class Page extends API {
 					),
 					'fields' => [
 						'404'              => [
-							'label' => esc_html__( '404 error pages', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-404-error-pages',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => '404',
-							'caps'  => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
+							'label'    => esc_html__( '404 error pages', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-404-error-pages',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => '404',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
+							'caps'     => [ self::CAP_GOALS ],
 						],
 						'outbound-links'   => [
-							'label' => esc_html__( 'Outbound links', 'plausible-analytics' ),
-							'docs'  => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-external-link-clicks',
-							'slug'  => 'enhanced_measurements',
-							'type'  => 'checkbox',
-							'value' => 'outbound-links',
-							'caps'  => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
+							'label'    => esc_html__( 'Outbound links', 'plausible-analytics' ),
+							'docs'     => 'https://plausible.io/wordpress-analytics-plugin#how-to-track-external-link-clicks',
+							'slug'     => 'enhanced_measurements',
+							'type'     => 'checkbox',
+							'value'    => 'outbound-links',
+							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
+							'caps'     => [ self::CAP_GOALS ],
 						],
 						'file-downloads'   => [
 							'label'    => esc_html__( 'File downloads', 'plausible-analytics' ),
@@ -166,6 +168,7 @@ class Page extends API {
 							'type'     => 'checkbox',
 							'value'    => 'file-downloads',
 							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS ] ),
+							'caps'     => [ self::CAP_GOALS ],
 						],
 						'search'           => [
 							'label'    => esc_html__( 'Search queries', 'plausible-analytics' ),
@@ -174,6 +177,7 @@ class Page extends API {
 							'type'     => 'checkbox',
 							'value'    => 'search',
 							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_PROPS ] ),
+							'caps'     => [ self::CAP_GOALS, self::CAP_PROPS ],
 						],
 						'tagged-events'    => [
 							'label'    => esc_html__( 'Custom events', 'plausible-analytics' ),
@@ -182,6 +186,7 @@ class Page extends API {
 							'type'     => 'checkbox',
 							'value'    => 'tagged-events',
 							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_PROPS ] ),
+							'caps'     => [ self::CAP_GOALS, self::CAP_PROPS ],
 						],
 						'revenue'          => [
 							'label'    => esc_html__( 'Ecommerce revenue', 'plausible-analytics' ),
@@ -190,6 +195,7 @@ class Page extends API {
 							'type'     => 'checkbox',
 							'value'    => 'revenue',
 							'disabled' => ! empty( $settings[ 'self_hosted_domain' ] ) || ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_FUNNELS, self::CAP_PROPS, self::CAP_REVENUE ] ),
+							'caps'     => [ self::CAP_GOALS, self::CAP_FUNNELS, self::CAP_PROPS, self::CAP_REVENUE ],
 						],
 						'pageview-props'   => [
 							'label'    => esc_html__( 'Authors and categories', 'plausible-analytics' ),
@@ -198,6 +204,7 @@ class Page extends API {
 							'type'     => 'checkbox',
 							'value'    => 'pageview-props',
 							'disabled' => ! $this->token_has_cap( [ self::CAP_PROPS ] ),
+							'caps'     => [ self::CAP_PROPS ],
 						],
 						'form-completions' => [
 							'label'    => esc_html__( 'Form completions', 'plausible-analytics' ),
@@ -206,6 +213,7 @@ class Page extends API {
 							'type'     => 'checkbox',
 							'value'    => 'form-completions',
 							'disabled' => ! $this->token_has_cap( [ self::CAP_GOALS, self::CAP_PROPS ] ),
+							'caps'     => [ self::CAP_GOALS, self::CAP_PROPS ],
 						],
 						'hash'             => [
 							'label' => esc_html__( 'Hash-based routing', 'plausible-analytics' ),
@@ -213,6 +221,7 @@ class Page extends API {
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'hash',
+							'caps'  => [],
 						],
 						'compat'           => [
 							'label' => esc_html__( 'IE compatibility', 'plausible-analytics' ),
@@ -220,6 +229,7 @@ class Page extends API {
 							'slug'  => 'enhanced_measurements',
 							'type'  => 'checkbox',
 							'value' => 'compat',
+							'caps'  => [],
 						],
 					],
 				],

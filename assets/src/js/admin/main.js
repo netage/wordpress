@@ -109,11 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
 				// Toggle: off
 				button.classList.replace('bg-indigo-600', 'bg-gray-200');
 				toggle.classList.replace('translate-x-5', 'translate-x-0');
+				button.dataset.status = 'off';
 				toggleStatus = '';
 			} else {
 				// Toggle: on
 				button.classList.replace('bg-gray-200', 'bg-indigo-600');
 				toggle.classList.replace('translate-x-0', 'translate-x-5');
+				button.dataset.status = 'on';
 				toggleStatus = 'on';
 			}
 
@@ -134,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		 *
 		 * @param e
 		 */
-		saveOption: function (e) {
+		saveOption: async function (e) {
 			const button = e.target;
 			const section = button.closest('.plausible-analytics-section');
 			const inputs = section.querySelectorAll('input, textarea');
@@ -157,7 +159,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			button.setAttribute('disabled', 'disabled');
 
-			plausible.ajax(form, button);
+			let data = await plausible.ajax(form, button);
+
+			if (data.capabilities === undefined) {
+				return;
+			}
+
+			plausible.maybeDisableOptions(data.capabilities);
+		},
+
+		/**
+		 * Disable options based on the capabilities retrieved from the API.
+		 *
+		 * @param capabilities
+		 */
+		maybeDisableOptions: function (capabilities) {
+			let options = document.querySelectorAll('button[data-caps]');
+
+			options.forEach(function (option) {
+				let caps = option.dataset.caps.split(',');
+				let disabled = false;
+				option.removeAttribute('disabled');
+
+				caps.forEach(function (cap) {
+					if (capabilities[cap] === false) {
+						disabled = true;
+					}
+				});
+
+				if (disabled === true) {
+					option.setAttribute('disabled', 'disabled');
+					// Trigger a click to make sure the option is disabled.
+					if (option.dataset.status === 'on') {
+						option.dispatchEvent(new Event('click', {bubbles: true}));
+					}
+				}
+			});
 		},
 
 		/**
