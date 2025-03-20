@@ -5,7 +5,7 @@ Tags: analytics, google analytics, web analytics, stats, privacy
 Requires at least: 5.9
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: Massachusetts Institute of Technology (MIT) license
 License URI: https://opensource.org/licenses/MIT
 
@@ -154,6 +154,14 @@ Contact us: https://plausible.io/contact
 Please make sure you make a backup of your database before updating any version to ensure that none of your data is lost.
 
 == Changelog ==
+
+= 2.3.1 | March 20th, 2025 =
+* Fixed: cronjob which updated JS library when Proxy enabled, didn't register properly.
+* Added: support for add to cart tracking through direct links, e.g. yourdomain.com?add-to-cart=1
+* Improved: added Gravity Forms compatibility to Form Completions enhanced measurement.
+* Improved: only rewrite JS script's ID attribute if IE compatibility is enabled.
+* Added: auto-enable customer user role tracking if EDD/WC is installed and Revenue tracking is enabled.
+* Added: features not available in plan are now disabled accordingly.
 
 = 2.3.0 | March 5th, 2025 =
 * Improved: Domain Name is now validated before it's stored in the database.
