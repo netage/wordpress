@@ -68,7 +68,7 @@ class Client {
 		if ( $is_valid ) {
 			set_transient( 'plausible_analytics_valid_token', [ $token => true ], 86400 ); // @codeCoverageIgnore
 
-			$this->update_capabilities( $token );
+			$this->update_capabilities( $token ); // @codeCoverageIgnore
 		}
 
 		return $is_valid;
