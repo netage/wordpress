@@ -42,9 +42,11 @@ final class Plugin {
 	 * @return void
 	 */
 	public function register_services() {
+
 		if ( is_admin() ) {
+			add_action( 'init', [ $this, 'load_settings' ] );
+			
 			new Admin\Upgrades();
-			new Admin\Settings\Page();
 			new Admin\Filters();
 			new Admin\Actions();
 			new Admin\Module();
@@ -58,6 +60,10 @@ final class Plugin {
 		new Compatibility();
 		new Filters();
 		new Proxy();
+	}
+
+	public function load_settings() {
+		new Admin\Settings\Page();
 	}
 
 	/**
