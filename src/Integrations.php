@@ -37,7 +37,7 @@ class Integrations {
 		}
 
 		// Form Plugins
-		if ( self::is_form_submit_active() ) {
+		if ( Helpers::is_enhanced_measurement_enabled( 'form-completions' ) ) {
 			new Integrations\FormSubmit();
 		}
 	}
@@ -56,14 +56,6 @@ class Integrations {
 	 */
 	public static function is_edd_active() {
 		return apply_filters( 'plausible_analytics_integrations_edd', function_exists( 'EDD' ) );
-	}
-
-	/**
-	 * Check if Form Submissions option is enabled in Enhanced Measurements.
-	 * @return mixed|null
-	 */
-	public static function is_form_submit_active() {
-		return apply_filters( 'plausible_analytics_integrations_form_submit', Helpers::is_enhanced_measurement_enabled( 'form-completions' ) );
 	}
 
 	/**
