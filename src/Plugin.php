@@ -45,16 +45,16 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			add_action( 'init', [ $this, 'load_settings' ] );
-			
+			add_action( 'init', [ $this, 'load_provisioning' ] );
+			add_action( 'init', [ $this, 'load_integrations_provisioning' ] );
+
 			new Admin\Upgrades();
 			new Admin\Filters();
 			new Admin\Actions();
 			new Admin\Module();
-			new Admin\Provisioning();
-			new Admin\Provisioning\Integrations();
 		}
 
-		new Integrations();
+		add_action( 'init', [ $this, 'load_integrations' ] );
 		new Actions();
 		new Ajax();
 		new Compatibility();
@@ -64,6 +64,33 @@ final class Plugin {
 
 	public function load_settings() {
 		new Admin\Settings\Page();
+	}
+
+	/**
+	 * Load @see Admin\Provisioning()
+	 *
+	 * @return void
+	 */
+	public function load_provisioning() {
+		new Admin\Provisioning();
+	}
+
+	/**
+	 * Load @see Admin\Provisioning\Integrations()
+	 *
+	 * @return void
+	 */
+	public function load_integrations_provisioning() {
+		new Admin\Provisioning\Integrations();
+	}
+
+	/**
+	 * Load @see Integrations()
+	 *
+	 * @return void
+	 */
+	public function load_integrations() {
+		new Integrations();
 	}
 
 	/**
