@@ -46,7 +46,6 @@ final class Plugin {
 		if ( is_admin() ) {
 			add_action( 'init', [ $this, 'load_settings' ] );
 			add_action( 'init', [ $this, 'load_provisioning' ] );
-			add_action( 'init', [ $this, 'load_integrations_provisioning' ] );
 
 			new Admin\Upgrades();
 			new Admin\Filters();
@@ -62,6 +61,13 @@ final class Plugin {
 		new Proxy();
 	}
 
+	/**
+	 * Load @see Admin\Settings\Page()
+	 *
+	 * @return void
+	 *
+	 * @codeCoverageIgnore
+	 */
 	public function load_settings() {
 		new Admin\Settings\Page();
 	}
@@ -70,17 +76,11 @@ final class Plugin {
 	 * Load @see Admin\Provisioning()
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function load_provisioning() {
 		new Admin\Provisioning();
-	}
-
-	/**
-	 * Load @see Admin\Provisioning\Integrations()
-	 *
-	 * @return void
-	 */
-	public function load_integrations_provisioning() {
 		new Admin\Provisioning\Integrations();
 	}
 
@@ -88,6 +88,8 @@ final class Plugin {
 	 * Load @see Integrations()
 	 *
 	 * @return void
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function load_integrations() {
 		new Integrations();
