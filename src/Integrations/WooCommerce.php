@@ -205,7 +205,7 @@ class WooCommerce {
 	 */
 	public function track_add_to_cart( $product, $add_to_cart_data ) {
 		if ( ! $product ) {
-			return;
+		    return;
 		}
 
 		$product_data  = $this->clean_data( $product->get_data() );
