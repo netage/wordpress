@@ -59,6 +59,7 @@ class Compatibility {
 			add_filter( 'rocket_exclude_js', [ $this, 'exclude_plausible_js' ] );
 			add_filter( 'rocket_minify_excluded_external_js', [ $this, 'exclude_plausible_js' ] );
 			add_filter( 'rocket_delay_js_exclusions', [ $this, 'exclude_plausible_inline_js' ] );
+			add_filter( 'rocket_delay_js_exclusions', [ $this, 'exclude_by_proxy_endpoint' ] );
 			add_filter( 'rocket_exclude_defer_js', [ $this, 'exclude_plausible_js_by_relative_url' ] );
 		}
 	}
@@ -122,6 +123,20 @@ class Compatibility {
 	 */
 	public function exclude_plausible_js_by_relative_url( $excluded_js ) {
 		$excluded_js[] = preg_replace( '/http[s]?:\/\/.*?(\/)/', '$1', Helpers::get_js_url( true ) );
+
+		return $excluded_js;
+	}
+
+	/**
+	 * Dear WP Rocket/SG Optimizer/Etc. don't minify/combine/delay our API endpoint, please.
+	 *
+	 * @param $excluded_js
+	 *
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function exclude_by_proxy_endpoint( $excluded_js ) {
+		$excluded_js[] = Helpers::get_rest_endpoint( false );
 
 		return $excluded_js;
 	}
