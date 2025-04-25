@@ -37,6 +37,19 @@ class TestCase extends YoastTestCase {
 	}
 
 	/**
+	 * Enable Enhanced Measurements > IE Compatibility
+	 *
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	public function enableCompat( $settings ) {
+		$settings[ 'enhanced_measurements' ] = [ 'compat' ];
+
+		return $settings;
+	}
+
+	/**
 	 * Enable form completions by modifying the settings array.
 	 *
 	 * @param array $settings The settings array to be modified.

@@ -50,15 +50,4 @@ class IntegrationsTest extends TestCase {
 
 		remove_filter( 'plausible_analytics_integrations_edd', '__return_true' );
 	}
-
-	/**
-	 * Determines if the form submission functionality is currently active.
-	 */
-	public function isFormSubmitActive() {
-		add_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
-
-		$this->assertTrue( Integrations::is_form_submit_active() );
-
-		remove_filter( 'plausible_analytics_integrations_form_submit', '__return_true' );
-	}
 }

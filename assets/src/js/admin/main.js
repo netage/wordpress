@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		 *
 		 * @param e
 		 */
-		toggleOption: function (e) {
+		toggleOption: async function (e) {
 			/**
 			 * Make sure event target is a toggle.
 			 */
@@ -109,11 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
 				// Toggle: off
 				button.classList.replace('bg-indigo-600', 'bg-gray-200');
 				toggle.classList.replace('translate-x-5', 'translate-x-0');
+				button.dataset.status = 'off';
 				toggleStatus = '';
 			} else {
 				// Toggle: on
 				button.classList.replace('bg-gray-200', 'bg-indigo-600');
 				toggle.classList.replace('translate-x-0', 'translate-x-5');
+				button.dataset.status = 'on';
 				toggleStatus = 'on';
 			}
 
@@ -126,7 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			form.append('is_list', button.dataset.list);
 			form.append('_nonce', plausible.nonce);
 
-			plausible.ajax(form);
+			let data = await plausible.ajax(form);
+
+			if (data.capabilities === undefined) {
+				return;
+			}
+
+			plausible.maybeDisableOptions(data.capabilities);
 		},
 
 		/**
@@ -158,6 +166,33 @@ document.addEventListener('DOMContentLoaded', () => {
 			button.setAttribute('disabled', 'disabled');
 
 			plausible.ajax(form, button);
+		},
+
+		/**
+		 * Disable options based on the capabilities retrieved from the API.
+		 *
+		 * @param capabilities
+		 */
+		maybeDisableOptions: function (capabilities) {
+			let options = document.querySelectorAll('button[data-caps]');
+
+			options.forEach(function (option) {
+				let caps = option.dataset.caps.split(',');
+				let disable = false;
+
+				caps.forEach(function (cap) {
+					if (capabilities[cap] === false) {
+						disable = true;
+					}
+				});
+
+				if (disable === true) {
+					// Trigger a click to make sure the option is disabled.
+					if (option.dataset.status === 'on') {
+						option.dispatchEvent(new Event('click', {bubbles: true}));
+					}
+				}
+			});
 		},
 
 		/**
@@ -375,7 +410,8 @@ document.addEventListener('DOMContentLoaded', () => {
 					}
 				}
 
-				if (response.status === 200) {
+				// We still want the data, if it's a Payment Required error.
+				if (response.status === 200 || response.status === 402) {
 					return response.json();
 				}
 
@@ -478,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}, 2000);
 			}
 		},
+
 		/**
 		 * Renders a HTML box containing additional information about the enabled option.
 		 *
